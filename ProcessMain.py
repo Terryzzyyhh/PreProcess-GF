@@ -18,7 +18,7 @@ GFrlcfg = {
     'GF1C': {'WFV': '16', 'MUX': '8', 'PAN': '2'},
     'GF1D': {'WFV': '16', 'MUX': '8', 'PAN': '2'},
     'GF2': {'MSS': '4', 'PAN': '1'},
-    'GF6': {'WFV': '16', 'MSS': '8', 'PAN': '2'},
+    'GF6': {'WFV': '16', 'MUX': '8', 'PAN': '2'},
 }
 
 
@@ -35,9 +35,9 @@ def Main(inputdir,  *,dem=None):
         print(gftarfile)
         print("......解压缩......")
         Filename, SatelliteID, GFType, SensorID, Year = GetMsgFromTar(gftarfile)
-        if int(Year) > 2022:
+        if int(Year) > 2021:
             Year = "2021"
-        if int(Year)<2014:
+        if int(Year) < 2015:
             Year = "2014"
         untardir = makedir(os.path.join(prjdir, "untar", Filename))
         untar(gftarfile, untardir)
@@ -64,7 +64,7 @@ def Main(inputdir,  *,dem=None):
         elif GFType == 'PMS':
             print("GFType:", GFType)
             print("正射校正+大气校正+融合")
-            if len(SatelliteID)==3:
+            if (len(SatelliteID) == 3 and SatelliteID != "GF6"):
                 mssresolution = int(GFrlcfg[SatelliteID]["MSS"])
                 MSStiffFile = glob.glob(untardir + "/*MSS*.tiff")[0]
             else:
@@ -99,5 +99,4 @@ def Main(inputdir,  *,dem=None):
     #
     # shutil.rmtree(prjdir)
 if __name__ == '__main__':
-    Main(r"G:\兴隆湖区域影像")
-
+    Main(r"F:\GF6test")

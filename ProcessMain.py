@@ -53,7 +53,7 @@ def Main(inputdir,  *,dem=None):
             orthdir = makedir(os.path.join(prjdir, Filename ))
             otrhtifpath = os.path.join(orthdir, multibandtiff.replace(".tiff", "_orth.tiff"))
             OrthoCorInDEM(multibandtiff, otrhtifpath, mssresolution, refdem=dem)
-            radacdir = makedir(os.path.join(prjdir, Filename + "radac"))
+            radacdir = makedir(os.path.join(inputdir, Filename + "radac"))
             metedatas = glob.glob(untardir + "/*.xml")
             orthtifs = glob.glob(os.path.join(prjdir, Filename + "orth", "*.tiff"))
             for orthtif, metedata in zip(orthtifs, metedatas):
@@ -86,17 +86,15 @@ def Main(inputdir,  *,dem=None):
             orthtifs=glob.glob(os.path.join(prjdir, Filename+"orth","*.tiff"))
             for orthtif, metedata in zip(orthtifs, metedatas):
                 outtif=os.path.join(radacdir,os.path.basename(orthtif).replace(".tiff", "_radac.tiff"))
-                RadACBlock(orthtif,metedata,outtif,SatelliteID, SensorID, Year, config)
-
+                RadACBlock(orthtif, metedata, outtif, SatelliteID, SensorID, Year, config)
 
             print("Pansharpen 融合")
-            sharpendir = makedir(os.path.join(prjdir,  Filename+"pansharpen"))
+            # sharpendir = makedir(os.path.join(inputdir,  Filename+"pansharpen"))
             radactifs = glob.glob(os.path.join(orthdir, "*.tiff"))
-            outsharpentif = os.path.join(sharpendir, os.path.basename(gftarfile).replace(".tar.gz", "orth_radac_pansharp.tiff"))
-            PanSharpen2(radactifs[0],radactifs[1],outsharpentif)
+            outsharpentif = os.path.join(inputdir,
+                                         os.path.basename(gftarfile).replace(".tar.gz", "orth_radac_pansharp.tiff"))
+            PanSharpen2(radactifs[0], radactifs[1], outsharpentif)
 
-
-    #
-    # shutil.rmtree(prjdir)
+    shutil.rmtree(prjdir)
 if __name__ == '__main__':
     Main(r"G:\港口物流指数长期更新\s2_202203\xiyatu")

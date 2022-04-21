@@ -29,7 +29,7 @@ def Main(inputdir,  *,dem=None):
     script_path = os.path.split(os.path.realpath(__file__))[0]
     config_file = os.path.join(script_path, "RadiometricCorrectionParameter.json")
     config = json.load(open(config_file))
-    tarFiles = glob.glob(os.path.join(inputdir, "*tar.gz"))
+    tarFiles = glob.glob(os.path.join(inputdir, "*.tar.gz"))
     for gftarfile in tarFiles:
         '''1.解压'''
         print(gftarfile)
@@ -99,4 +99,4 @@ def Main(inputdir,  *,dem=None):
     #
     # shutil.rmtree(prjdir)
 if __name__ == '__main__':
-    Main(r"F:\GF6test")
+    Main(r"G:\港口物流指数长期更新\s2_202203\xiyatu")

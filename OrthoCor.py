@@ -20,7 +20,7 @@ def OrthoCorInDEM(input, output, resolution, refdem=None):
         zone = int("326" + str(zone_))
     else:
         lon = float(filename.split('_')[2][1:])
-        zone_ = -int(math.ceil(lon / 6)) + 31
+        zone_ = int(math.ceil(-lon / 6)) + 30
         zone = int("326" + str(zone_))
     print('Zone:', zone)
     inputfile = gdal.Open(input)
